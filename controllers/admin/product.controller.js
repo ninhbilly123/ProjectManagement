@@ -85,7 +85,7 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany(
         { _id: { $in: ids}}, 
         { 
-          deleted: "true",
+          deleted: true,
           deletedAt: new Date(),
         }
       ); 
@@ -102,6 +102,7 @@ module.exports.changeMulti = async (req, res) => {
 
         req.flash("success", `Đã đổi vị trí thành công ${ids.length} sản phẩm!`);
       }
+      break;
     default: 
       break; 
   }
@@ -125,5 +126,11 @@ module.exports.deleteItem = async (req, res) => {
   // res.redirect("back")
   const referer = req.get("Referer");
   res.redirect(referer || "/admin/products"); 
-}
+};
 
+// [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm mới sản phẩm"
+  }); 
+};
